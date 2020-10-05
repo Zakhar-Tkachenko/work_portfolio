@@ -1,0 +1,18 @@
+{% extends 'blog/base.html'%}
+{%load crispy_forms_tags%}
+{%block content%}
+    <div class="content-section mt-3">
+        <h3>Join now</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{form|crispy}}
+            <div class="form-group">
+                <a href="{%url 'social:begin' 'facebook'%}">Log with Facebook</a>
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted"> Already have an account? <a class="ml-2" href="{% url 'login'%}">Sing in</a></small>
+        </div>
+</div>
+{%endblock%}

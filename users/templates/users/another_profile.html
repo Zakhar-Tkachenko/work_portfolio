@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+    <img class="rounded-circle account-img" width="69" height="69" src="{{name.profile.image.url}}">
+        </div>
+        <h2 class="account-heading">{{name}}</h2>
+      </div>
+      <!-- FORM HERE -->
+{%for post in posts %}
+<div class="card mt-2">
+    <h5 class="card-header"><a href="{%url 'post_detail' post.id%}">{{post.title}}</a></h5>
+    <div class="card-body">
+        <h5 class="card-title">{{post.body}}</h5>
+        <img class="rounded-circle account-img" width="69" height="69" src="{{post.author.profile.image.url}}">
+        <p class="tags">Tags:
+            {%for tag in post.tags.all%}
+            <a href="{%url 'post_list_by_tag' tag.slug%}">{{tag.name}}</a>
+                {%endfor%}
+        </p>
+        <p class="card-text">{{post.publish}}</p>
+    </div>
+</div>
+{%endfor%}
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<img class="rounded-circle account-img" width="69" height="69" src="{{user.profile.image.url}}">
+<h2 class="account-heading">{{ user.username }}</h2>
+<h2 class="text-secondary">{{ user.email }}</h2>
+<form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{u_form|crispy}}
+            {{p_form|crispy}}
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+</form>
+{%for post in posts %}
+<div class="card mt-2">
+    <h5 class="card-header"><a href="{%url 'post_detail' post.id%}">{{post.title}}</a></h5>
+    <div class="card-body">
+        <h5 class="card-title">{{post.body}}</h5>
+        <img class="rounded-circle account-img" width="69" height="69" src="{{post.author.profile.image.url}}">
+        <p class="tags">Tags:
+            {%for tag in post.tags.all%}
+            <a href="{%url 'post_list_by_tag' tag.slug%}">{{tag.name}}</a>
+                {%endfor%}
+        </p>
+        <p class="card-text">{{post.publish}}</p>
+    </div>
+</div>
+{%endfor%}
+{% endblock content %}

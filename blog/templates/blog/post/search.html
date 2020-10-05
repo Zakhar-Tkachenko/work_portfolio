@@ -1,0 +1,23 @@
+{%extends 'blog/base.html'%}
+{%block content%}
+{%if query%}
+<h1>Posts containing {{query}}</h1>
+<h3>
+    {%with results.count as tr%}
+    Found {{tr}}
+    {%endwith%}
+</h3>
+{%for post in results%}
+<h4><a href="{%url 'post_detail' post.id %}">{{post.title}}</a></h4>
+{%empty%}
+<p>There are not results</p>
+{%endfor%}
+{%else%}
+
+<h1>Search for posts</h1>
+<form method="get">
+    {{form.as_p}}
+    <input type="submit" value="Search">
+</form>
+{%endif%}
+{%endblock%}
